@@ -18,7 +18,7 @@ Feature: S3 related general feature
 	
 	# is this logging access logging?
 	# check if at least one s3 has logging enabled, because logging will require another s3
-	@noskip
+	@noskip_at_line_24
 	Scenario: S3 must have access logging enabled 
 		Given I have aws_s3_bucket defined
 		When it has logging

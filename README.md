@@ -19,7 +19,7 @@ user-friendly-features (Do all in one for now, split if it feels cluttered)
 	azure
 	other_provider…
 	tests
-		test_file.py
+		fun_functional_tests.py
 		aws_tests
             passing_setups
                 ALB
@@ -46,17 +46,19 @@ General features vs provider specific features. How to place them? Make a new di
 
 ## TODO (which should really be converted to issues later)
 
-add policies
-
 add tests
-
-setup Tox
+- add all passing tests
+- add all failing tests
+    - fix the .expected's (which might be cancer)
 
 
 ## Notes
 Why have passing_setups and failing_setups?
 - Felt it would be easier to name the files that way.    
 
+Each passsing/failing setup is tested against all the features in that directory.
+- Unnecesssary. (Or even good practice?)
+- Should pass/skip unrelated stuff nonetheless 
 
 
 usage: `terraform-compliance -p plan.out.json -f path_to_repo`
