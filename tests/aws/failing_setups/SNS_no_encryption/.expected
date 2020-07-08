@@ -1,0 +1,1 @@
+Failure: kms_master_key_id property in aws_sns_topic.user_updates resource matches with \(\|^$\|^null\|^None\)$ case insensitive regex. It is set to None.

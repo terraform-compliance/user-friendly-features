@@ -60,5 +60,8 @@ Each passsing/failing setup is tested against all the features in that directory
 - Unnecesssary. (Or even good practice?)
 - Should pass/skip unrelated stuff nonetheless 
 
+Some tests fail due to release
+- debug .expected's after release
+
 
 usage: `terraform-compliance -p plan.out.json -f path_to_repo`

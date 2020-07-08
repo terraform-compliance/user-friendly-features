@@ -1,0 +1,2 @@
+Failure: access_key property in aws provider matches with (?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9]) case insensitive regex. It is set to AAAAAAAAAAAAAAAAAAAA.
+Failure: secret_key property in aws provider matches with (?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]) case insensitive regex. It is set to AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.

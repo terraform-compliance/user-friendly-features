@@ -1,0 +1,1 @@
+Failure: resource property in {'Action': ['sts:AssumeRole'], 'Effect': 'Allow', 'Resource': '*'} resource matches with ^\*$ case insensitive regex. It is set to *.
