@@ -1,1 +1,0 @@
-{"format_version":"0.1","terraform_version":"0.12.25","planned_values":{"root_module":{}},"configuration":{"provider_config":{"aws":{"name":"aws","expressions":{"access_key":{"constant_value":"AAAAAAAAAAAAAAAAAAAA"},"region":{"constant_value":"us-west-2"},"secret_key":{"constant_value":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}}}},"root_module":{}}}

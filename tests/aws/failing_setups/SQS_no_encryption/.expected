@@ -1,1 +1,0 @@
-Failure: kms_master_key_id property in aws_sqs_queue.terraform_queue resource matches with \(\|^$\|^null\|^None\)$ case insensitive regex. It is set to None.

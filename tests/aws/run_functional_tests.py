@@ -9,7 +9,8 @@ class Config(object):
     provider = 'aws'  # specifically, the name of the directory
     test_dir = 'tests/{}'.format(provider)
     default_parameters = [
-        '--no-ansi'
+        '--no-ansi',
+        # '--formatter=silent_formatter'
     ]
 
 print('Running functional tests in {}.'.format(Config.test_dir))
@@ -18,23 +19,35 @@ if len(sys.argv) == 2:
     tests = [sys.argv[1]]
 else:
     tests = []
+    # test_dir = tests/aws
+    # this for loops is slightly obnoxious, fix before production
+    # passing_setups, failing_setups
     for setups in os.listdir(Config.test_dir):
         if os.path.isdir('{}/{}'.format(Config.test_dir, setups)):
-            for setup in os.listdir('{}/{}'.format(Config.test_dir, setups)):
-                if os.path.isdir('{}/{}/{}'.format(Config.test_dir, setups, setup)):
-                    tests.append((setups, setup))
+            # ALB, S3, etc. (outer dir)
+            for feature in os.listdir('{}/{}'.format(Config.test_dir, setups)):
+                if os.path.isdir('{}/{}/{}'.format(Config.test_dir, setups, feature)):
+                    # ALB_setup_1, S3_setup_3, etc. (inner test dir)
+                    for setup in os.listdir('{}/{}/{}'.format(Config.test_dir, setups, feature)):
+                        if os.path.isdir('{}/{}/{}/{}'.format(Config.test_dir, setups, feature, setup)):
+                            tests.append((setups, feature, setup))
 
 print('Total {} number of tests will be executed.'.format(len(tests)))
 
 test_summary = []
 failure_happened = False
 
-for outer_dir, test_dir in tests:
+# setups/feature/setup & feature/feature.feature
+for outer_dir, feature, test_dir in tests:
     parameters = ['terraform-compliance']
     parameters.extend(Config.default_parameters.copy())
-    directory = '{}/{}/{}'.format(Config.test_dir, outer_dir, test_dir)
+    directory = '{}/{}/{}/{}'.format(Config.test_dir, outer_dir, feature, test_dir)
     
-    feature_directory = Config.provider
+    # Ignore if there are any .terraform folders in this level. They can build up when writing tests.
+    if test_dir == '.terraform':
+        continue
+
+    feature_directory = '{}/{}'.format(Config.provider, feature)
     test_result = ''
 
     # if not os.path.isfile('{}/feature.txt'.format(directory)):

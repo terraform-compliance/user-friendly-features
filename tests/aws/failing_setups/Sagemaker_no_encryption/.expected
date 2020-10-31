@@ -1,1 +1,0 @@
-Failure: kms_key_id property in aws_sagemaker_notebook_instance.ni resource matches with \(\|^$\|^null\|^None\)$ case insensitive regex. It is set to None.

@@ -1,6 +1,0 @@
-Failure: description property in aws_security_group_rule.example_rule resource matches with \(\|^$\|^null\|^None\)$ case insensitive regex. It is set to None.
-Failure: description property in aws_security_group_rule.example_rule resource matches with \(\|^$\|^null\|^None\)$ case insensitive regex. It is set to None.
-Failure: description property in aws_security_group.example_group resource matches with \(\x00\|^$\|^null\|^None\|^Managed by Terraform\)$ case insensitive regex. It is set to Managed by Terraform.
-Failure: description property in aws_db_security_group.example_db resource matches with \(\x00\|^$\|^null\|^None\|^Managed by Terraform\)$ case insensitive regex. It is set to Managed by Terraform.
-Failure: description property in aws_elasticache_security_group.example_elasticache resource matches with \(\x00\|^$\|^null\|^None\|^Managed by Terraform\)$ case insensitive regex. It is set to Managed by Terraform.
-Failure: description property in aws_redshift_security_group.example_redshift resource matches with \(\x00\|^$\|^null\|^None\|^Managed by Terraform\)$ case insensitive regex. It is set to Managed by Terraform.
