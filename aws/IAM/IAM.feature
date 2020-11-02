@@ -63,3 +63,8 @@ Feature: IAM related general features
 		Given I have aws_iam_account_password_policy defined
 		Then it must have max_password_age
 		And its value must be less than 91
+
+
+	Scenario: Ensure there are no iam user policy attachments
+		Given I have aws_iam_user_policy_attachment defined
+		Then it must fail

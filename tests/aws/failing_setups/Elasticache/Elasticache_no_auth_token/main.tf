@@ -10,7 +10,4 @@ resource "aws_elasticache_replication_group" "example" {
 
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
-
-  auth_token = 1234567890123456
-
 }

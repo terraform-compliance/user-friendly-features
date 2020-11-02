@@ -3,7 +3,7 @@ resource "aws_security_group_rule" "example_rule" {
   from_port         = 0
   to_port           = 65535
   protocol          = "tcp"
-  cidr_blocks       = ["10.0.0.0/16"]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "sg-123456"
 
   description = "An example security group"
@@ -15,7 +15,7 @@ resource "aws_security_group_rule" "example_rule_22" {
   from_port         = 0
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["10.0.0.0/16"]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "sg-123456"
 
   description = "An example security group"
@@ -27,7 +27,7 @@ resource "aws_security_group_rule" "example_rule_3389" {
   from_port         = 0
   to_port           = 3389
   protocol          = "tcp"
-  cidr_blocks       = ["10.0.0.0/16"]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "sg-123456"
 
   description = "An example security group"
@@ -43,7 +43,7 @@ resource "aws_security_group" "example_group" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -67,7 +67,7 @@ resource "aws_security_group" "example_group_22" {
     from_port   = 443
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -91,7 +91,7 @@ resource "aws_security_group" "example_group_3389" {
     from_port   = 443
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -112,7 +112,7 @@ resource "aws_db_security_group" "example_db" {
   description = "Example database security group"
 
   ingress {
-    cidr = "10.0.0.0/24"
+    cidr = "0.0.0.0/0"
   }
 }
 
@@ -128,6 +128,6 @@ resource "aws_redshift_security_group" "example_redshift" {
   description = "Example Redshift"
 
   ingress {
-    cidr = "10.0.0.0/24"
+    cidr = "0.0.0.0/0"
   }
 }
