@@ -5,76 +5,66 @@ import colorful
 import re
 
 
-class Config(object):
-    provider = ['aws']  # specifically, the name of the directory
-    test_dir = ['tests/{}'.format(p) for p in provider]
-    default_parameters = [
-        '--no-ansi',
-        # '--formatter=silent_formatter'
-    ]
-
-
 def prep_tests(test_dir):
     tests = []
     # test_dir = tests/aws
     # this for loops is slightly obnoxious, fix before production
-    # passing_setups, failing_setups
-    for setups in os.listdir(test_dir):
-        if os.path.isdir('{}/{}'.format(test_dir, setups)):
-            # ALB, S3, etc. (outer dir)
-            for feature in os.listdir('{}/{}'.format(test_dir, setups)):
-                if os.path.isdir('{}/{}/{}'.format(test_dir, setups, feature)):
+
+
+    # ALB, S3, etc. (outer dir)
+    for feature in os.listdir(test_dir):
+        if os.path.isdir('{}/{}'.format(test_dir, feature)):
+            # passing_setups, failing_setups
+            for setups in os.listdir('{}/{}'.format(test_dir, feature)):
+                if os.path.isdir('{}/{}/{}'.format(test_dir, feature, setups)):
                     # ALB_setup_1, S3_setup_3, etc. (inner test dir)
-                    for setup in os.listdir('{}/{}/{}'.format(test_dir, setups, feature)):
-                        if os.path.isdir('{}/{}/{}/{}'.format(test_dir, setups, feature, setup)):
-                            tests.append((setups, feature, setup))
+                    for setup in os.listdir('{}/{}/{}'.format(test_dir, feature, setups)):
+                        if os.path.isdir('{}/{}/{}/{}'.format(test_dir, feature, setups, setup)):
+                            # test location
+                            # feature is ../../
+                            # tests.append((setups, feature, setup))
+                            tests.append('{}/{}/{}/{}'.format(test_dir, feature, setups, setup))
 
     return tests
 
 
-def run_tests(provider, test_suite_dir, tests):
-    # print('Running functional tests in {}.'.format(test_dir))
-
-    # print('Total {} number of tests will be executed.'.format(len(tests)))
-
+def run_tests(tests):
     test_summary = []
     failure_happened = False
 
-    # setups/feature/setup & feature/feature.feature
-    for outer_dir, feature, test_dir in tests:
+    for test_dir in tests:
         parameters = ['terraform-compliance', '--no-ansi']
-        directory = '{}/{}/{}/{}'.format(test_suite_dir, outer_dir, feature, test_dir)
         
         # Ignore if there are any .terraform folders in this level. They can build up when writing tests.
-        if test_dir == '.terraform':
+        if '.terraform' in test_dir:
             continue
 
-        feature_directory = '{}/{}'.format(provider, feature)
+        feature_directory = '{}/../..'.format(test_dir)
         test_result = ''
 
         expected = ''
         unexpected = ''
 
-        if not os.path.isfile('{}/plan.out.json'.format(directory)):# or not os.path.isfile(feature_directory):
+        if not os.path.isfile('{}/plan.out.json'.format(test_dir)):# or not os.path.isfile(feature_directory):
             test_result = colorful.orange('skipped')
         else:
-            if os.path.isfile('{}/.failure'.format(directory)):
+            if os.path.isfile('{}/.failure'.format(test_dir)):
                 parameters.append('--wip')
 
-            if os.path.isfile('{}/.expected'.format(directory)):
-                with open('{}/.expected'.format(directory)) as expected_file:
+            if os.path.isfile('{}/.expected'.format(test_dir)):
+                with open('{}/.expected'.format(test_dir)) as expected_file:
                     expected = expected_file.read().split('\n')
 
-            if os.path.isfile('{}/.unexpected'.format(directory)):
-                with open('{}/.unexpected'.format(directory)) as unexpected_file:
+            if os.path.isfile('{}/.unexpected'.format(test_dir)):
+                with open('{}/.unexpected'.format(test_dir)) as unexpected_file:
                     unexpected = unexpected_file.read().split('\n')
 
-            if not os.path.isfile('{}/.no_early_exit'.format(directory)):
+            if not os.path.isfile('{}/.no_early_exit'.format(test_dir)):
                 parameters.append('-q')
 
             parameters.extend([
                 '-f', '{}'.format(feature_directory),
-                '-p', '{}/plan.out.json'.format(directory)
+                '-p', '{}/plan.out.json'.format(test_dir)
             ])
 
             try:
@@ -146,58 +136,33 @@ def run_tests(provider, test_suite_dir, tests):
 
     return failure_happened, test_summary
 
-    # print('\n\nRan {} tests.'.format(len(tests)))
-    # print('\n'.join(sorted(test_summary)))
-
-    # if failure_happened:
-    #     sys.exit(1)
-
 
 if __name__ == "__main__":
-    # print(sys.argv[1])
     if sys.argv[1] == 'all':
         providers = ['aws', 'azure']
     else:
         providers = [sys.argv[1]]
     
     test_dirs = ['tests/{}'.format(provider) for provider in providers]
-    # provider = sys.argv[1]
 
-    # tests = []
     tests_ran = 0
     summary = []
     failure_happened = False
     for provider in providers:
         test_suite_dir = 'tests/{}'.format(provider)
-        tests = prep_tests(test_suite_dir)
+        tests = prep_tests(test_suite_dir)[:2]
 
         print('Running functional tests in {}.'.format(test_suite_dir))
         print('{} tests will be executed.'.format(len(tests)))
 
-        failure, test_summary = run_tests(provider, test_suite_dir, tests)
+        failure, test_summary = run_tests(tests)
         failure_happened = failure_happened or failure
         summary.extend(test_summary)
         tests_ran += len(tests)
-    
+
 
     print('\n\nRan {} tests.'.format(tests_ran))
     print('\n'.join(sorted(summary)))
 
     if failure_happened:
         sys.exit(1)
-
-
-    # run_tests()
-
-
-    # for each provider
-    # print('Running functional tests in {}.'.format(test_dir))
-    # print('{} tests will be executed.'.format(len(tests)))
-
-
-    # after loop
-    # print('\n\nRan {} tests.'.format(len(tests)))
-    # print('\n'.join(sorted(test_summary)))
-
-    # if failure_happened:
-    #     sys.exit(1)
