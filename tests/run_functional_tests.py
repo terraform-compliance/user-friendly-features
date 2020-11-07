@@ -7,9 +7,6 @@ import re
 
 def prep_tests(test_dir):
     tests = []
-    # test_dir = tests/aws
-    # this for loops is slightly obnoxious, fix before production
-
 
     # ALB, S3, etc. (outer dir)
     for feature in os.listdir(test_dir):
@@ -22,7 +19,6 @@ def prep_tests(test_dir):
                         if os.path.isdir('{}/{}/{}/{}'.format(test_dir, feature, setups, setup)):
                             # test location
                             # feature is ../../
-                            # tests.append((setups, feature, setup))
                             tests.append('{}/{}/{}/{}'.format(test_dir, feature, setups, setup))
 
     return tests
@@ -45,7 +41,7 @@ def run_tests(tests):
         expected = ''
         unexpected = ''
 
-        if not os.path.isfile('{}/plan.out.json'.format(test_dir)):# or not os.path.isfile(feature_directory):
+        if not os.path.isfile('{}/plan.out.json'.format(test_dir)):
             test_result = colorful.orange('skipped')
         else:
             if os.path.isfile('{}/.failure'.format(test_dir)):
@@ -150,7 +146,7 @@ if __name__ == "__main__":
     failure_happened = False
     for provider in providers:
         test_suite_dir = 'tests/{}'.format(provider)
-        tests = prep_tests(test_suite_dir)[:2]
+        tests = prep_tests(test_suite_dir)
 
         print('Running functional tests in {}.'.format(test_suite_dir))
         print('{} tests will be executed.'.format(len(tests)))
