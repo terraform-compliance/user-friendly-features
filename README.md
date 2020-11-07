@@ -103,3 +103,8 @@ You may also consider using additional [**dotfiles**](https://terraform-complian
 `tox -e <provider>` to run all tests related to the specific provider (aws, azure, etc.)
 
 `./tests/cp_features.sh rm all` to cleanup unwanted features in test directories. (Can be useful when tox exits before finishing)
+
+
+## Thanks to
+
+[Checkov](https://github.com/bridgecrewio/checkov) for inspiration of most of the scenarios on release.
