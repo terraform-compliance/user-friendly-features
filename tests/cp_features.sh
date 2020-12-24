@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -z "$2" ]]; then
-    echo "You need to use this script with a parameter. (Either 'cp' or 'rm') and ('aws', 'azure', etc.)"
+    echo "You need to use this script with following parameters. (Either 'cp' or 'rm') and ('aws', 'azure', etc.)"
     exit 1
 fi
 
