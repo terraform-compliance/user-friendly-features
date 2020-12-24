@@ -107,4 +107,4 @@ You may also consider using additional [**dotfiles**](https://terraform-complian
 
 ## Thanks to
 
-[Checkov](https://github.com/bridgecrewio/checkov) for inspiration of most of the scenarios on release.
+[Checkov](https://github.com/bridgecrewio/checkov) for providing inspiration for most of the scenarios on release.
