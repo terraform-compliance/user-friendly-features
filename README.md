@@ -4,7 +4,7 @@ This is a repository for collecting commonly usable features in one place.
 
 ## Usage
 
-`terraform-compliance -p /path/to/plan.out.json -f git:https://github.com/terraform-compliance/user-friendly-features -S`
+`terraform-compliance -f git:https://github.com/terraform-compliance/user-friendly-features.git -p /path/to/plan.out.json -S`
 
 `-S` is [optional](https://terraform-compliance.com/pages/usage/#-s--silent), it makes the output less verbose.
 
